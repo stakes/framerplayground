@@ -1,0 +1,19 @@
+* {
+  margin: 0;
+  padding: 0;
+  border: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  font-family: "Roboto", sans-serif; }
+
+body {
+  font: 28px/1em "Roboto";
+  color: #FFF; }
+
+body, h1, h2, h3, h4, h5, h6 {
+  font-family: "Roboto", sans-serif; }
+
+h6 {
+  text-align: right; }
+
+/*# sourceMappingURL=app.css.map */

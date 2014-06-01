@@ -1,0 +1,2 @@
+(function(){var n;$(document).foundation(),n=new Layer({x:0,y:0,width:200,height:200}),n.style.borderRadius="10px",n.on(Events.Click,function(n){var e,i,a,t;return i=$("#panel1").find('input[name="tension"]').val(),e=$("#panel1").find('input[name="friction"]').val(),t=$("#panel1").find('input[name="velocity"]').val(),a=$("#panel1").find('input[name="tolerance"]').val(),console.log(i,e,t,a)})}).call(this);
+//# sourceMappingURL=./app.map
