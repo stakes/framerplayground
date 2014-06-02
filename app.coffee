@@ -1,65 +1,69 @@
 APP = {}
-APP.startX = $(window).width()/2 - 120
-APP.startY = 100
-APP.isAnimating = false
-APP.animation = null
-APP.springType = 'spring-rk4'
-APP.codeString = ''
-APP.rk4Props =
-  type: 'rk4'
-  tension: 10
-  friction: 10
-  velocity: 10
-APP.dhoProps =
-  type: 'dho'
-  stiffness: 10
-  damping: 10
-  mass: 10
-  velocity: 10
 
+$ ()->
 
+  APP.startX = $(window).width()/2 - 120
+  APP.startY = 100
+  APP.isAnimating = false
+  APP.animation = null
+  APP.springType = 'spring-rk4'
+  APP.codeString = ''
+  APP.rk4Props =
+    type: 'rk4'
+    tension: 10
+    friction: 10
+    velocity: 10
+  APP.dhoProps =
+    type: 'dho'
+    stiffness: 10
+    damping: 10
+    mass: 10
+    velocity: 10
 
+  DemoLayer = new Layer
+    x: APP.startX
+    y: APP.startY
+    width: 120
+    height: 120
+  DemoLayer.style =
+    backgroundColor: '#7ed321'
+    borderRadius: '10px'
+    textAlign: 'center'
+    lineHeight: '120px'
+    fontSize: '1rem'
+  DemoLayer.html = 'Drag me!'
 
+  DemoLayer.draggable.enabled = true
+  DemoLayer.on Events.DragEnd, (evt) ->
+    springStr = APP.springType
+    if springStr == 'spring-rk4'
+      props = APP.rk4Props
+    else
+      props = APP.dhoProps
+    console.log 'props -', props
+    APP.animation = new Animation
+      layer: @
+      properties:
+        x: APP.startX
+        y: APP.startY
+      curve: springStr
+      curveOptions: props
+    APP.animation.on Events.AnimationStart, () ->
+      APP.isAnimating = true
+      DemoLayer.html = 'Animating...'
+      DemoLayer.opacity = .3
+    APP.animation.on Events.AnimationStop, () ->
+      APP.isAnimating = false
+      DemoLayer.x = APP.startX
+      DemoLayer.y = APP.startY
+      DemoLayer.html = 'Drag me!'
+      DemoLayer.opacity = 1
+    APP.animation.start()
 
-DemoLayer = new Layer
-  x: APP.startX
-  y: APP.startY
-  width: 120
-  height: 120
-DemoLayer.style =
-  backgroundColor: '#7ed321'
-  borderRadius: '10px'
-  textAlign: 'center'
-  lineHeight: '120px'
-  fontSize: '1rem'
-DemoLayer.html = 'Drag me!'
-
-DemoLayer.draggable.enabled = true
-DemoLayer.on Events.DragEnd, (evt) ->
-  springStr = APP.springType
-  if springStr == 'spring-rk4'
-    props = APP.rk4Props
-  else
-    props = APP.dhoProps
-  console.log 'props -', props
-  APP.animation = new Animation
-    layer: @
-    properties:
-      x: APP.startX
-      y: APP.startY
-    curve: springStr
-    curveOptions: props
-  APP.animation.on Events.AnimationStart, () ->
-    APP.isAnimating = true
-    DemoLayer.html = 'Animating...'
-    DemoLayer.opacity = .3
-  APP.animation.on Events.AnimationStop, () ->
-    APP.isAnimating = false
-    DemoLayer.x = APP.startX
-    DemoLayer.y = APP.startY
-    DemoLayer.html = 'Drag me!'
-    DemoLayer.opacity = 1
-  APP.animation.start()
+  setupControls()
+  $(document).foundation()
+  $(window).on 'resize', () ->
+    resetPosition()
 
 
 
@@ -140,12 +144,10 @@ myLayer.animate\n
 
 updatePage = () ->
   $('.snippet').html(APP.codeString)
+  Rainbow.color($('.snippet'), () ->
+
+  )
 
 resetPosition = () ->
   APP.startX = $(window).width()/2 - 120
   DemoLayer.x = APP.startX
-
-setupControls()
-$(document).foundation()
-$(window).on 'resize', () ->
-  resetPosition()

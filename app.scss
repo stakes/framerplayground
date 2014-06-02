@@ -7,7 +7,8 @@
   font-family: "Roboto", sans-serif;
 }
 
-body, h1, h2, h3, h4, h5, h6 {
+body, h1, h2, h3, h4, h5, h6,
+.tabs dd > a, .tabs .tab-title > a {
   font-family: "Roboto", sans-serif;
 }
 
@@ -19,10 +20,21 @@ body {
 h1 {
   font-weight: 100;
   font-size: 1em;
+  margin-top: .6em;
+  margin-bottom: 1em;
+  margin-left: .5em;
 }
 
 h6 {
   text-align: right;
+  margin-top: .45em;
+}
+
+h3 {
+  font-size: .5em;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-top: .5em;
 }
 
 pre, code {
@@ -32,7 +44,19 @@ pre, code {
   color: #333;
   tab-size:2;
   -moz-tab-size: 2;
+  -moz-user-select: -moz-text;
+  -khtml-user-select: text;
+  -webkit-user-select: none;
+  -ms-user-select: text;
+  user-select: text;
 }
+
+// textarea.snippet {
+//   outline: none;
+//   resize: none;
+//   overflow: auto; 
+//   height: 13em;
+// }
 
 #FramerRoot {
   margin-left: 50px;
@@ -43,15 +67,45 @@ pre, code {
   .button {
     background-color: rgba(#ccc, .3);
     position: absolute;
-    top: 410px;
+    top: 355px;
     left: 10px;
   }
 }
 
+.tabs {
+  border-bottom: 2px solid #efefef;
+  dd > a, .tab-title > a {
+    font-size: .8em;
+    font-weight: 500;
+    padding: 10px 14px;
+    background-color: #fefefe;
+  }
+  .tab-title.active > a {
+    background-color: #efefef;
+  }
+  .active {
+
+  }
+}
+
+.range-slider {
+  margin: 0;
+  margin-top: .4em;
+  &.round .range-slider-handle {
+    background-color: #60c4ff;
+    &:hover {
+      background-color: #26a4ee;
+    }
+  }
+}
 
 .control-container {
   background: #fefefe;
-  min-height: 400px;
+  min-height: 345px;
+}
+
+input[type="text"] {
+  margin: 0 0 .3em 0;
 }
 
 // anything above mobile
