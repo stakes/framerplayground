@@ -104,8 +104,8 @@ setupControls = () ->
     updatePage()
 
   $('#stop-btn').on 'click', (evt) ->
+    evt.preventDefault()
     if APP.isAnimating
-      evt.preventDefault()
       APP.animation.stop()
 
   Utils.delay .1, () ->
