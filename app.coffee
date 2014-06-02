@@ -19,8 +19,9 @@ $ ()->
     damping: 10
     mass: 10
     velocity: 10
+  APP.DemoLayer = null
 
-  DemoLayer = new Layer
+  APP.DemoLayer = DemoLayer = new Layer
     x: APP.startX
     y: APP.startY
     width: 120
@@ -40,7 +41,6 @@ $ ()->
       props = APP.rk4Props
     else
       props = APP.dhoProps
-    console.log 'props -', props
     APP.animation = new Animation
       layer: @
       properties:
@@ -115,7 +115,6 @@ setupControls = () ->
 
 
 updateCodeString = (props) ->
-  console.log props.type
   if props.type == 'rk4'
     template = _.template "
 myLayer.animate\n
@@ -144,10 +143,8 @@ myLayer.animate\n
 
 updatePage = () ->
   $('.snippet').html(APP.codeString)
-  Rainbow.color($('.snippet'), () ->
-
-  )
+  Rainbow.color()
 
 resetPosition = () ->
   APP.startX = $(window).width()/2 - 120
-  DemoLayer.x = APP.startX
+  APP.DemoLayer.x = APP.startX
