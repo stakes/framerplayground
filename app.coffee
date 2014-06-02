@@ -1,6 +1,7 @@
 APP = {}
+APP.startX = $(window).width()/2 - 60
 APP.isAnimating = false
-APP.property = 'x'
+APP.animation = null
 APP.springType = 'spring-rk4'
 APP.codeString = ''
 APP.rk4Props =
@@ -13,81 +14,128 @@ APP.dhoProps =
   stiffness: 10
   damping: 10
   mass: 10
-  velocity2: 10
+  velocity: 10
 
 
 
 
 
 DemoLayer = new Layer
-  x: 0
+  x: APP.startX
   y: 0
-  width: 200
-  height: 200
+  width: 120
+  height: 120
 DemoLayer.style =
   backgroundColor: '#7ed321'
   borderRadius: '10px'
   textAlign: 'center'
-  lineHeight: '200px'
-DemoLayer.html = 'Click me!'
+  lineHeight: '120px'
+  fontSize: '1rem'
+DemoLayer.html = 'Drag me!'
 
-DemoLayer.on Events.Click, (evt) ->
-  tension = $('#panel1').find('input[name="tension"]').val()
-  friction = $('#panel1').find('input[name="friction"]').val()
-  velocity = $('#panel1').find('input[name="velocity"]').val()
-  animation = new Animation
+DemoLayer.draggable.enabled = true
+DemoLayer.on Events.DragEnd, (evt) ->
+  springStr = APP.springType
+  if springStr == 'spring-rk4'
+    props = APP.rk4Props
+  else
+    props = APP.dhoProps
+  console.log 'props -', props
+  APP.animation = new Animation
     layer: @
     properties:
-      x: 500
-    curve: 'spring'
-    curveOptions: APP.rk4Props
-  animation.on 'start', () ->
+      x: APP.startX
+      y: 0
+    curve: springStr
+    curveOptions: props
+  APP.animation.on Events.AnimationStart, () ->
+    APP.isAnimating = true
     DemoLayer.html = 'Animating...'
     DemoLayer.opacity = .3
-  animation.on 'end', () ->
-    DemoLayer.html = 'Click me!'
+  APP.animation.on Events.AnimationStop, () ->
+    APP.isAnimating = false
+    DemoLayer.x = APP.startX
+    DemoLayer.y = 0
+    DemoLayer.html = 'Drag me!'
     DemoLayer.opacity = 1
-  animation.start()
+  APP.animation.start()
 
 
 
 
 
-setupForms = () ->
-  _.each $('[data-slider]').on 'change', () ->
+
+
+setupControls = () ->
+
+  $('[data-tab]').on 'toggled', (evt, tab) ->
+    $(tab).find('[data-slider]').foundation()
+    APP.springType = 'spring-'+tab[0].id
+    updateCodeString APP[tab[0].id+'Props']
+    updatePage()
+
+  $('#rk4 [data-slider]').on 'change', () ->
     valueName = $(@).data('slider-name')
     value = $(@).attr('data-slider')
-    $('input[name="'+valueName+'"]').val(value)
+    $('#rk4 input[name="'+valueName+'"]').val(value)
     APP.rk4Props[valueName] = Number value
     updateCodeString(APP.rk4Props)
     updatePage()
+  $('#dho [data-slider]').on 'change', () ->
+    valueName = $(@).data('slider-name')
+    value = $(@).attr('data-slider')
+    $('#dho input[name="'+valueName+'"]').val(value)
+    APP.dhoProps[valueName] = Number value
+    updateCodeString(APP.dhoProps)
+    updatePage()
 
-  _.each $('#panel1 input[type="text"]'), (el) ->
-    propName = $(el).attr('name')
-
-  $('#panel1').find('input[type="text"]').on 'change', (evt) ->
+  $('#rk4 input[type="text"]').on 'change', (evt) ->
     APP.rk4Props[$(@).attr('name')] = Number $(@).val()
+    updateCodeString(APP.rk4Props)
+    updatePage()
+  $('#dho input[type="text"]').on 'change', (evt) ->
+    APP.dhoProps[$(@).attr('name')] = Number $(@).val()
+    updateCodeString(APP.dhoProps)
+    updatePage()
+
+  $('#stop-btn').on 'click', (evt) ->
+    evt.preventDefault()
+    APP.animation.stop()
+
+  Utils.delay .1, () ->
     updateCodeString(APP.rk4Props)
     updatePage()
 
 
 
 updateCodeString = (props) ->
+  console.log props.type
   if props.type == 'rk4'
     template = _.template "
 myLayer.animate\n
-properties:\n
-  x: 500\n
-curve: 'spring'\n
-curveOptions:\n
-  tension: <%= tension %>\n
-  friction: <%= friction %>\n
-  velocity: <%= velocity %>\n"
+\tproperties:\n
+\t\tx: 0\n
+\tcurve: 'spring-rk4'\n
+\tcurveOptions:\n
+\t\ttension: <%= tension %>\n
+\t\tfriction: <%= friction %>\n
+\t\tvelocity: <%= velocity %>\n"
+  else
+    template = _.template "
+myLayer.animate\n
+\tproperties:\n
+\t\tx: 0\n
+\tcurve: 'spring-dho'\n
+\tcurveOptions:\n
+\t\tstiffness: <%= stiffness %>\n
+\t\tdamping: <%= damping %>\n
+\t\tmass: <%= mass %>\n
+\t\tvelocity: <%= velocity %>\n"
   APP.codeString = template props
 
 
 updatePage = () ->
   $('.snippet').html(APP.codeString)
 
-setupForms()
+setupControls()
 $(document).foundation()

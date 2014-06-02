@@ -19,6 +19,14 @@ h6 {
 pre, code {
   font-size: 1rem;
   line-height: 1.2rem;
-  font-weight: normal; }
+  font-weight: normal;
+  tab-size: 2;
+  -moz-tab-size: 2; }
+
+#FramerRoot {
+  margin-left: 50px; }
+
+.button {
+  background-color: #ccc; }
 
 /*# sourceMappingURL=app.css.map */
