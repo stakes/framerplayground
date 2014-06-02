@@ -1,5 +1,6 @@
 APP = {}
-APP.startX = $(window).width()/2 - 60
+APP.startX = $(window).width()/2 - 120
+APP.startY = 100
 APP.isAnimating = false
 APP.animation = null
 APP.springType = 'spring-rk4'
@@ -22,7 +23,7 @@ APP.dhoProps =
 
 DemoLayer = new Layer
   x: APP.startX
-  y: 0
+  y: APP.startY
   width: 120
   height: 120
 DemoLayer.style =
@@ -45,7 +46,7 @@ DemoLayer.on Events.DragEnd, (evt) ->
     layer: @
     properties:
       x: APP.startX
-      y: 0
+      y: APP.startY
     curve: springStr
     curveOptions: props
   APP.animation.on Events.AnimationStart, () ->
@@ -55,7 +56,7 @@ DemoLayer.on Events.DragEnd, (evt) ->
   APP.animation.on Events.AnimationStop, () ->
     APP.isAnimating = false
     DemoLayer.x = APP.startX
-    DemoLayer.y = 0
+    DemoLayer.y = APP.startY
     DemoLayer.html = 'Drag me!'
     DemoLayer.opacity = 1
   APP.animation.start()
@@ -99,8 +100,9 @@ setupControls = () ->
     updatePage()
 
   $('#stop-btn').on 'click', (evt) ->
-    evt.preventDefault()
-    APP.animation.stop()
+    if APP.isAnimating
+      evt.preventDefault()
+      APP.animation.stop()
 
   Utils.delay .1, () ->
     updateCodeString(APP.rk4Props)
@@ -115,6 +117,7 @@ updateCodeString = (props) ->
 myLayer.animate\n
 \tproperties:\n
 \t\tx: 0\n
+\t\ty: 0\n
 \tcurve: 'spring-rk4'\n
 \tcurveOptions:\n
 \t\ttension: <%= tension %>\n
@@ -125,6 +128,7 @@ myLayer.animate\n
 myLayer.animate\n
 \tproperties:\n
 \t\tx: 0\n
+\t\ty: 0\n
 \tcurve: 'spring-dho'\n
 \tcurveOptions:\n
 \t\tstiffness: <%= stiffness %>\n
@@ -137,5 +141,11 @@ myLayer.animate\n
 updatePage = () ->
   $('.snippet').html(APP.codeString)
 
+resetPosition = () ->
+  APP.startX = $(window).width()/2 - 120
+  DemoLayer.x = APP.startX
+
 setupControls()
 $(document).foundation()
+$(window).on 'resize', () ->
+  resetPosition()

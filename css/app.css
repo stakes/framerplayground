@@ -6,27 +6,41 @@
   -webkit-tap-highlight-color: transparent;
   font-family: "Roboto", sans-serif; }
 
-body {
-  font: 28px/1em "Roboto";
-  color: #FFF; }
-
 body, h1, h2, h3, h4, h5, h6 {
   font-family: "Roboto", sans-serif; }
+
+body {
+  font: 28px/1em "Roboto";
+  background: black url("/framer/background.png") repeat scroll top left; }
+
+h1 {
+  font-weight: 100;
+  font-size: 1em; }
 
 h6 {
   text-align: right; }
 
 pre, code {
-  font-size: 1rem;
-  line-height: 1.2rem;
+  font-size: .8em;
+  line-height: .9em;
   font-weight: normal;
+  color: #333;
   tab-size: 2;
   -moz-tab-size: 2; }
 
 #FramerRoot {
   margin-left: 50px; }
 
-.button {
-  background-color: #ccc; }
+.row.button-container {
+  margin: 0; }
+  .row.button-container .button {
+    background-color: rgba(204, 204, 204, 0.3);
+    position: absolute;
+    top: 410px;
+    left: 10px; }
+
+.control-container {
+  background: #fefefe;
+  min-height: 400px; }
 
 /*# sourceMappingURL=app.css.map */
