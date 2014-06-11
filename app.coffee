@@ -11,9 +11,9 @@ $ ()->
   APP.bezierProps =
     type: 'bezier'
     options:
-      p1x: 0
+      p1x: .5
       p1y: 0
-      p2x: 1
+      p2x: .5
       p2y: 1
       time: 1
   APP.rk4Props =
@@ -47,7 +47,6 @@ $ ()->
   DemoLayer.draggable.enabled = true
   DemoLayer.on Events.DragEnd, (evt) ->
     springStr = APP.springType
-    console.log springStr
 
     if springStr == 'bezier-curve'
       props = APP.bezierProps
@@ -149,7 +148,6 @@ setupControls = () ->
 updateCodeString = (props) ->
   if props.time?
     props.options.time = props.time
-    console.log props.time
   if props.type == 'rk4'
     template = _.template "
 myLayer.animate\n
