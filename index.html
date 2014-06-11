@@ -22,17 +22,95 @@
 	<body>
 		<div class="control-container">
 			<div class="row">
-				<h1>Framer.js Spring Animation Playground</h1>
+				<h1>Framer.js Animation Playground</h1>
 			</div>
 
 			<div class="row">
 				<div class="medium-8 columns">
 					<ul class="tabs" data-tab>
-						<li class="tab-title active"><a href="#rk4">spring-rk4</a></li>
+						<li class="tab-title active"><a href="#bezier">bezier-curve</a></li>
+						<li class="tab-title"><a href="#rk4">spring-rk4</a></li>
 						<li class="tab-title"><a href="#dho">spring-dho</a></li>
 					</ul>
 					<div class="tabs-content">
-						<div id="rk4" class="content row active">
+						<div id="bezier" class="content row active">
+							<div class="row">
+								<div class="medium-3 columns">
+									<h6>P1x</h6>
+								</div>
+								<div class="medium-7 columns">
+									<div class="range-slider round" data-slider-name='p1x' data-slider="1" data-options="start: 0; end: 2; step: .05;">
+								    <span class="range-slider-handle"></span>
+								    <span class="range-slider-active-segment"></span>
+								    <input type="hidden" value="200">
+									</div>
+								</div>
+								<div class="medium-2 columns">
+									<input type="text" name="p1x" value="0" />
+								</div>
+							</div>
+							<div class="row">
+								<div class="medium-3 columns">
+									<h6>P1y</h6>
+								</div>
+								<div class="medium-7 columns">
+									<div class="range-slider round" data-slider-name='p1y' data-slider="1" data-options="start: 0; end: 2; step: .05;">
+								    <span class="range-slider-handle"></span>
+								    <span class="range-slider-active-segment"></span>
+								    <input type="hidden" value="10">
+									</div>
+								</div>
+								<div class="medium-2 columns">
+									<input type="text" name="p1y" value="0" />
+								</div>
+							</div>
+							<div class="row">
+								<div class="medium-3 columns">
+									<h6>P2x</h6>
+								</div>
+								<div class="medium-7 columns">
+									<div class="range-slider round" data-slider-name='p2x' data-slider="1" data-options="start: 0; end: 2; step: .05;">
+								    <span class="range-slider-handle"></span>
+								    <span class="range-slider-active-segment"></span>
+								    <input type="hidden" value="1">
+									</div>
+								</div>
+								<div class="medium-2 columns">
+									<input type="text" name="p2x" value="0" />
+								</div>
+							</div>
+							<div class="row">
+								<div class="medium-3 columns">
+									<h6>P2y</h6>
+								</div>
+								<div class="medium-7 columns">
+									<div class="range-slider round" data-slider-name='p2y' data-slider="1" data-options="start: 0; end: 2; step: .05;">
+								    <span class="range-slider-handle"></span>
+								    <span class="range-slider-active-segment"></span>
+								    <input type="hidden" value="0">
+									</div>
+								</div>
+								<div class="medium-2 columns">
+									<input type="text" name="p2y" value="0" />
+								</div>
+							</div>
+							<div class="row">
+								<div class="medium-3 columns">
+									<h6>Time</h6>
+								</div>
+								<div class="medium-7 columns">
+									<div class="range-slider round" data-slider-name='time' data-slider="1" data-options="start: 0; end: 10; step: .1;">
+								    <span class="range-slider-handle"></span>
+								    <span class="range-slider-active-segment"></span>
+								    <input type="hidden" value="0">
+									</div>
+								</div>
+								<div class="medium-2 columns">
+									<input type="text" name="time" value="0" />
+								</div>
+							</div>
+						</div>
+						<div id="rk4" class="content row">
 							<div class="row">
 								<div class="medium-3 columns">
 									<h6>Tension</h6>
@@ -144,7 +222,7 @@
 					</div>
 				</div>
 
-				<div class="medium-3 columns">
+				<div class="medium-4 columns">
 					<h3>Sample Coffeescript</h3>
 					<pre><code class="snippet" data-language="coffeescript">
 					</code></pre>	

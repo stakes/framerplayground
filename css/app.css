@@ -52,7 +52,7 @@ pre, code {
   .row.button-container .button {
     background-color: rgba(204, 204, 204, 0.3);
     position: absolute;
-    top: 355px;
+    top: 396px;
     left: 10px; }
 
 .tabs {
@@ -75,7 +75,7 @@ pre, code {
 
 .control-container {
   background: #fefefe;
-  min-height: 345px; }
+  min-height: 386px; }
 
 input[type="text"] {
   margin: 0 0 .3em 0; }
