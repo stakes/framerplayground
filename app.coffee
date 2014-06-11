@@ -94,7 +94,8 @@ setupControls = () ->
 
   $('[data-tab]').on 'toggled', (evt, tab) ->
     $(tab).find('[data-slider]').foundation()
-    APP.springType = 'spring-'+tab[0].id
+    str = tab[0].id
+    APP.springType = if str == 'bezier' then 'bezier-curve' else 'spring-'+tab[0].id
     updateCodeString APP[tab[0].id+'Props']
     updatePage()
 
